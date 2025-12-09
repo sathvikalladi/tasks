@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<body>
+    <input id="searchBar" type="text">
+
+    <ul id="wordList"></ul>
+    
+    <script>
+        const words = <%- JSON.stringify(words) %>
+    </script>
+
+    <script>
+        const searchBar = document.getElementById("searchBar");
+        const wordList = document.getElementById("wordList");
+
+        function filteredList() {
+            const input = searchBar.value.toLowerCase();
+            wordList.innerHTML = "";
+
+            for(var i = 0; i < words.length; i++) {
+                if(words[i].startsWith(searchBar.value)) {
+                    const li = document.createElement("li");
+                    li.textContent = words[i];
+                    wordList.appendChild(li);
+                }
+            }
+        }
+
+        searchBar.addEventListener("input", filteredList);
+
+        filteredList();
+
+    </script>
+</body>
+</html>
