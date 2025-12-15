@@ -7,17 +7,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-    res.render("LoginForm.ejs");
+    const currentStatus = "submit"
+    res.render("LoginForm-q1.ejs", {
+        status: currentStatus
+    });
 });
 
 app.post("/submit", (req, res) => {
     const username = req.body["username"];
     const password = req.body["password"];
-    if(username.includes("@")) {
-        if(password.length >= 8 && password) {
 
+    setTimeout(() => {
+        if(/^[^@]+@[^@]+\.com$/.test(username) == false) {
+            console.log("password must include 8 letters.");
         }
-    }
+        if(/^.{8,}$/.test(password) == false) {
+            console.log("password must include 8 letters.");
+        }
+        if(/[^a-zA-Z0-9]/.test(password) == false) {
+            console.log("username must be of an email type.");
+        }
+    
+        const currentStatus = "submit";
+        res.render("LoginForm-q1.ejs", {
+            status: currentStatus
+        });
+    }, 3000);
 });
 
 app.listen(PORT, () => {

@@ -7,24 +7,25 @@
 </head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 <body>
-    <form action="/submit" method="POST">
+    <form action="/submit" method="POST" id="loginForm">
         <label>username</label>
         <input type="text" name="username">
 
         <label>password</label>
         <input type="password" name="password">
 
-        <input type="submit" value="submit">
+        <input id="submitBtn" type="submit" value=<%- status %>>
     </form>
 
-    <form action="/submit" method="POST">
-        <label>username</label>
-        <input type="text" name="username">
+    <script>
+        const form = document.getElementById("loginForm");
+        const button = document.getElementById("submitBtn");
+    
+        form.addEventListener("submit", () => {
+            button.value = "loading...";
+        });
+    </script>
 
-        <label>password</label>
-        <input type="password" name="password">
-
-        <input type="submit" value="submit">
-    </form>
+    
 </body>
 </html>

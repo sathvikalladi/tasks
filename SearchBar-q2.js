@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
     const randomWords = ["orange", "orbit", "orchid", "ox", "octopus", "oval", "oracle", "orator", "oration", "orama"]
 
-    res.render("SearchBar.ejs", {
+    res.render("SearchBar-q2.ejs", {
         words: randomWords
     });
 });
