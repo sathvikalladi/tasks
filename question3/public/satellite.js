@@ -7,7 +7,7 @@ const githubBtn = document.getElementById("githubBtn");
 issBtn.addEventListener("click", async () => {
     const res = await fetch("/api/iss");
     const data = await res.json();
-    output.textContent = JSON.stringify(data);
+    output.textContent = JSON.stringify(data); 
 });
     
     weatherBtn.addEventListener("click", async () => {
