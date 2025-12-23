@@ -66,11 +66,12 @@ router.patch("/update/:id", upload.single("image"), async (req, res) => {
             await db.query("UPDATE task_metadata SET is_completed = $1 WHERE task_id = $2", [is_completed, id]);
         }
 
-        let imagePath;
         if (req.file) {
-            imagePath = `/uploads/${req.file.filename}`;
-        } else {
-            imagePath = null;
+            const imagePath = `/uploads/${req.file.filename}`;
+            await db.query(
+                "INSERT INTO task_metadata (task_id, image_path) VALUES ($1, $2)",
+                [id, imagePath]
+            );
         }
 
         return res.json({ message: "Task updated successfully" });
