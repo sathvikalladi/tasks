@@ -49,20 +49,41 @@ router.delete("/delete/:id", async (req, res) => {
     }
 });
 
-router.patch("/update/:id", async (req, res) => {
+router.patch("/update/:id", upload.single("image"), async (req, res) => {
     const { id } = req.params;
-    const { is_completed } = req.body;
+    const { title, description, is_completed } = req.body;
 
     try {
-        await db.query(
-            "UPDATE task_metadata SET is_completed = $1 WHERE task_id = $2",
-            [is_completed, id]
-        );
-        return res.json({ message: "Status updated" });
+        if (title) {
+            await db.query("UPDATE tasks SET title = $1 WHERE id = $2", [title, id]);
+        }
+
+        if (description) {
+            await db.query("UPDATE task_metadata SET description = $1 WHERE task_id = $2", [description, id]);
+        }
+        
+        if (is_completed) {
+            await db.query("UPDATE task_metadata SET is_completed = $1 WHERE task_id = $2", [is_completed, id]);
+        }
+
+        let imagePath;
+        if (req.file) {
+            imagePath = `/uploads/${req.file.filename}`;
+        } else {
+            imagePath = null;
+        }
+
+        return res.json({ message: "Task updated successfully" });
     } catch (err) {
+        console.error(err);
         return res.status(500).json({ error: "Update failed" });
     }
 });
+
+
+
+
+
 
 router.get("/search", async (req, res) => {
     let { q } = req.query;
