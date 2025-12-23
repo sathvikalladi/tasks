@@ -89,7 +89,8 @@ app.post("/addBook", async (req, res, next) => {
             [title, genre]
         );
 
-        res.status(201).json({ message: "Book added" });
+        return res.status(201).json({ message: "Book added" });
+
     } catch (err) {
         next(err);
     }
