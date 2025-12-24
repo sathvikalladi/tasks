@@ -9,5 +9,13 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
+//s3
 
-export const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+    if (!file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files allowed"), false);
+    }
+    return cb(null, true);
+}
+
+export const upload = multer({ storage, fileFilter });
